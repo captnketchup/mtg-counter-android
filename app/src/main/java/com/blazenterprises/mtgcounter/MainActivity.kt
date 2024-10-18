@@ -45,7 +45,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainScreen() {
     val navController = rememberNavController()
-    val gameState = GameState(0, 0, emptyList())
+    val gameState = GameState(0, 0, emptyList(), emptyList())
     NavHost(navController, startDestination = "welcome") {
         composable("welcome") { WelcomeScreen(navController) }
         composable("startGame") { LifeSetupPage(navController, gameState) }

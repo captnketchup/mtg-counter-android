@@ -1,0 +1,59 @@
+name: Android CI
+
+on:
+  # Triggers the workflow on push or pull request events to the default branch
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    # Specify the environment in which the job will run
+    runs-on: ubuntu-latest
+
+    # Set up a matrix to test different combinations, if needed (e.g., different SDK versions)
+    # matrix can be extended to test on different Java or Android SDK versions if needed
+    steps:
+      # Step 1: Check out the code from your repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Set up JDK (Android typically requires JDK 11 or 17 depending on the Gradle and Android version)
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu' # You can use 'adopt' or 'zulu'
+          java-version: '17'   # Set the required Java version (could be 11 or 17)
+
+      # Step 3: Cache Gradle dependencies to speed up builds
+      - name: Cache Gradle dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      # Step 4: Set up Android SDK
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v2
+        with:
+          api-level: 33           # Specify the API level of the Android SDK
+          build-tools: 33.0.2     # Specify the version of build tools
+
+      # Step 5: Grant execute permissions to Gradle wrapper script
+      - name: Make Gradle wrapper executable
+        run: chmod +x ./gradlew
+
+      # Step 6: Build the project
+      - name: Build with Gradle
+        run: ./gradlew build
+
+      # Step 7: Run tests
+      - name: Run tests
+        run: ./gradlew test
