@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.blazenterprises.mtgcounter.R
 import com.blazenterprises.mtgcounter.gamestate.GameState
+import com.blazenterprises.mtgcounter.gamestate.Player
 
 @Composable
 fun PlayerSetup(navController: NavController, gameState: GameState){
@@ -93,6 +94,13 @@ fun PlayerSetup(navController: NavController, gameState: GameState){
                             IconButton(
                                 onClick = {
                                     gameState.numberOfPlayers = playerNumber
+                                    for (i in 1..playerNumber) {
+                                        gameState.players + Player(
+                                            gameState.totalLifeOfPlayers,
+                                            Color.White,
+                                            emptyList()
+                                        )
+                                    }
                                     navController.navigate("game")
                                 },
                                 modifier = Modifier
