@@ -15,6 +15,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -22,6 +23,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.blazenterprises.mtgcounter.gamestate.GameState
@@ -76,14 +78,14 @@ fun LifeSetupPage(navController: NavController, gameState: GameState) {
                             gameState.totalLifeOfPlayers = life
                             navController.navigate("playerSetup")
                         },
+                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF42A5F5)),
                         modifier = Modifier
                             .height(100.dp)
                             .width(100.dp),
-//                        shape = RoundedCornerShape(8.dp)
                     ) {
                         Text(
                             text = "$life",
-                            style = MaterialTheme.typography.bodyMedium,
+                            style = MaterialTheme.typography.titleLarge,
                             maxLines = 1
                         )
                     }

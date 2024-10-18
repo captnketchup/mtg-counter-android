@@ -15,6 +15,6 @@ fun GameView(navController: NavController, gameState: GameState) {
     modifier = Modifier.fillMaxSize(),
     contentAlignment = Alignment.Center
     ) {
-        Text(text = "Settings Screen")
+        Text(text = "Game Screen :)))")
     }
 }

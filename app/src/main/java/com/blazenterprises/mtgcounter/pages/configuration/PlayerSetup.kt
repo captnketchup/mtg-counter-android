@@ -2,13 +2,16 @@ package com.blazenterprises.mtgcounter.pages.configuration
 
 import android.widget.ImageButton
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -23,21 +26,32 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.blazenterprises.mtgcounter.R
 import com.blazenterprises.mtgcounter.gamestate.GameState
 
 @Composable
 fun PlayerSetup(navController: NavController, gameState: GameState){
+    val diceIcons = listOf(
+        R.drawable.dice1,
+        R.drawable.dice2,
+        R.drawable.dice3,
+        R.drawable.dice4,
+        R.drawable.dice5,
+        R.drawable.dice6,
+    )
+
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
     ) {
         Row (
-          modifier = Modifier
-              .fillMaxWidth()
-              .padding(bottom = 32.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 32.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             IconButton(onClick = { navController.popBackStack() }) {
@@ -76,25 +90,21 @@ fun PlayerSetup(navController: NavController, gameState: GameState){
                     ) {
                         for (column in 1..3) {
                             val playerNumber = row * 3 + column
-                            Button(
+                            IconButton(
                                 onClick = {
                                     gameState.numberOfPlayers = playerNumber
-                                    navController.navigate("gameView")
+                                    navController.navigate("game")
                                 },
                                 modifier = Modifier
-                                    .size(80.dp),
-                                shape = RoundedCornerShape(8.dp),
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = Color(0xFF42A5F5),
-                                    contentColor = Color.White
-                                )
+                                    .size(100.dp)
+                                    .background(Color.Transparent, shape = RoundedCornerShape(8.dp)) // Background color and shape
                             ) {
-                                IconButton(onClick = { navController.navigate("game") }) {
-                                    Icon(
-                                        imageVector = Icons.Default,
-                                        contentDescription = "Navigate to WelcomeScreen"
-                                    )
-                                }
+                                Icon(
+                                    painter = painterResource(id = diceIcons[playerNumber - 1]),
+                                    contentDescription = "Dice $playerNumber",
+                                    modifier = Modifier.fillMaxSize(),
+                                    tint = Color(0xFF42A5F5)
+                                )
                             }
                         }
                     }
