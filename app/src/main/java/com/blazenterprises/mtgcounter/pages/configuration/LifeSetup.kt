@@ -1,4 +1,4 @@
-package com.blazenterprises.mtgcounter.pages.configurationPages
+package com.blazenterprises.mtgcounter.pages.configuration
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun StartGameScreen() {
+fun LifeSetupPage() {
     Column(
         modifier = Modifier
             .fillMaxSize()
