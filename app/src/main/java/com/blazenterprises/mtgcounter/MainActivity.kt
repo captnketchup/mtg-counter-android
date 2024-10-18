@@ -25,9 +25,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.blazenterprises.mtgcounter.gamestate.GameState
 import com.blazenterprises.mtgcounter.pages.SettingsScreen
 import com.blazenterprises.mtgcounter.pages.configuration.LifeSetupPage
-import com.blazenterprises.mtgcounter.ui.theme.MtgCounterTheme
+import com.blazenterprises.mtgcounter.pages.configuration.PlayerSetup
+import com.blazenterprises.mtgcounter.pages.game.GameView
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,10 +43,13 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainScreen() {
     val navController = rememberNavController()
+    val gameState = GameState(0, 0, emptyList())
     NavHost(navController, startDestination = "welcome") {
         composable("welcome") { WelcomeScreen(navController) }
-        composable("startGame") { LifeSetupPage() }
+        composable("startGame") { LifeSetupPage(navController, gameState) }
         composable("settings") { SettingsScreen() }
+        composable("playerSetup") { PlayerSetup(navController, gameState) }
+        composable("game") { GameView(navController, gameState) }
     }
 }
 
@@ -57,9 +62,8 @@ fun WelcomeScreen(navController: NavHostController) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        // Replace with your actual logo resource
         Image(
-            painter = painterResource(id = R.drawable.mennogitar), // Make sure you have a logo in your drawable resources
+            painter = painterResource(id = R.drawable.mennogitar),
             contentDescription = "Logo",
             modifier = Modifier
                 .size(256.dp)
